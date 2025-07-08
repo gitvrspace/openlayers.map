@@ -1,0 +1,38 @@
+# .github/workflows/main.yml
+
+# 워크플로우의 이름을 지정합니다. GitHub 레포지토리의 'Actions' 탭에 표시됩니다.
+name: Python application
+
+# 이 워크플로우가 언제 실행될지를 정의합니다.
+on:
+  # 'main' 브랜치로 push 이벤트가 발생했을 때 실행됩니다.
+  push:
+    branches: [ "main" ]
+  # 'main' 브랜치에 대한 pull_request 이벤트가 발생했을 때도 실행됩니다.
+  pull_request:
+    branches: [ "main" ]
+
+# 실행될 작업(job)들을 정의합니다.
+jobs:
+  # 'build'라는 이름의 작업을 정의합니다.
+  build:
+    # 이 작업이 실행될 가상 환경을 지정합니다. 'ubuntu-latest'는 최신 우분투 환경을 의미합니다.
+    runs-on: ubuntu-latest
+
+    # 작업의 단계(step)들을 순서대로 정의합니다.
+    steps:
+      # 1. 레포지토리의 코드를 가상 환경으로 가져옵니다 (체크아웃).
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 파이썬 환경을 설정합니다.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # 사용할 파이썬 버전을 지정합니다.
+          python-version: '3.10'
+
+      # 3. 파이썬 스크립트를 실행합니다.
+      # 'run' 키워드를 사용하여 쉘 명령어를 실행할 수 있습니다.
+      - name: Run Python script
+        run: python main.py
